@@ -37,11 +37,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation %s"), *HitLocation.ToString());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("miss"));
+		ControlledTank->AimAt(HitLocation);
 	}
 }
 
@@ -74,7 +70,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("unable to deproject crosshair"));
+		UE_LOG(LogTemp, Error, TEXT("%s unable to deproject crosshair"), *GetName());
 	}
 
 	return false;
