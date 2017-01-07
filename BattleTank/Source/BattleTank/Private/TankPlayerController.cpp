@@ -41,24 +41,41 @@ void ATankPlayerController::AimTowardsCrosshair()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("no HitLocation"));
+		UE_LOG(LogTemp, Warning, TEXT("miss"));
 	}
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
+	if (!ControlledTank) return false;
+
 	// Find the crosshair location on the screen in pixels.
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	auto CrosshairScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
 
+	// SEE GetHitResultAtScreenPosition()!
+
+	// Find the unit vector direction of the crosshair
 	FVector CameraWorldLocation;
 	FVector WorldDirection;
 	if (DeprojectScreenPositionToWorld(CrosshairScreenLocation.X, CrosshairScreenLocation.Y, CameraWorldLocation, WorldDirection))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("look direction %s"), *WorldDirection.ToString());
+		// Ray-trace out to see if / what we hit something
+		FHitResult HitResult;
+		FVector TraceEnd = CameraWorldLocation + WorldDirection * LineTraceRange;
+		// FIXME hits the SkySphere
+		FCollisionQueryParams TraceParams(FName(TEXT("")), false, ControlledTank);
+		if (GetWorld()->LineTraceSingleByChannel(HitResult, CameraWorldLocation, TraceEnd, ECollisionChannel::ECC_Visibility, TraceParams))
+		{
+			HitLocation = HitResult.ImpactPoint;
+			return true;
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("unable to deproject crosshair"));
 	}
 
-	HitLocation = FVector(1.0);
 	return false;
 }

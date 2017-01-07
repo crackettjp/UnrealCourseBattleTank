@@ -26,7 +26,10 @@ private:
 	float CrossHairXLocation = 0.5;
 
 	UPROPERTY(EditAnywhere, Category = "UI Crosshair")
-	float CrossHairYLocation = 1.0f/3.0f;
+	float CrossHairYLocation = 1.0f / 3.0f;
+
+	UPROPERTY(EditAnywhere, Category = "UI Crosshair")
+	float LineTraceRange = 1000000;
 
 	void ATankPlayerController::AimTowardsCrosshair();
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
