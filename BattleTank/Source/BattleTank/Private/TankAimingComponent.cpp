@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
 
 
@@ -29,10 +30,19 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("launch speed %f"), LaunchSpeed);
+	if (!Barrel) return;
+
+	FVector LaunchVelocity;
+	FCollisionResponseParams ResponseParams;
+	TArray<AActor*> ActorsToIgnore;
+	if (UGameplayStatics::SuggestProjectileVelocity(this, LaunchVelocity, Barrel->GetSocketLocation(FName("Projectile")), HitLocation, LaunchSpeed, false, 0.0f, 0.0f,
+		ESuggestProjVelocityTraceOption::DoNotTrace, ResponseParams, ActorsToIgnore,false))
+	{
+		Barrel->Elevate(5.0f);
+	}
 }
 
-void UTankAimingComponent::SetBarrel(UStaticMeshComponent * BarrelToSet)
+void UTankAimingComponent::SetBarrel(UTankBarrel * BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
