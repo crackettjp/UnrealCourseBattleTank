@@ -22,7 +22,7 @@ void ATankAIController::BeginPlay()
 
 void ATankAIController::Tick(float DeltaSeconds)
 {
-	Super::Tick();
+	Super::Tick(DeltaSeconds);
 	if (!ControlledTank || !PlayerTank) return;
 	ControlledTank->AimAt(PlayerTank->GetTargetLocation(ControlledTank));
 }
