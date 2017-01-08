@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
-#include "TankBarrel.h"
 #include "TankAimingComponent.h"
+#include "TankBarrel.h"
 
 
 // Sets default values for this component's properties
@@ -36,7 +36,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	FCollisionResponseParams ResponseParams;
 	TArray<AActor*> ActorsToIgnore;
 	if (UGameplayStatics::SuggestProjectileVelocity(this, LaunchVelocity, Barrel->GetSocketLocation(FName("Projectile")), HitLocation, LaunchSpeed, false, 0.0f, 0.0f,
-		ESuggestProjVelocityTraceOption::DoNotTrace, ResponseParams, ActorsToIgnore,false))
+		ESuggestProjVelocityTraceOption::DoNotTrace, ResponseParams, ActorsToIgnore, false))
 	{
 		Barrel->Elevate(5.0f);
 	}
