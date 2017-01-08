@@ -10,22 +10,13 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	bWantsBeginPlay = true;
-	PrimaryComponentTick.bCanEverTick = true;
+	bWantsBeginPlay = false;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
-
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
+void UTankAimingComponent::SetBarrel(UTankBarrel * BarrelToSet)
 {
-	Super::BeginPlay();
-}
-
-
-// Called every frame
-void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
-{
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+	Barrel = BarrelToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
@@ -36,13 +27,17 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	FCollisionResponseParams ResponseParams;
 	TArray<AActor*> ActorsToIgnore;
 	if (UGameplayStatics::SuggestProjectileVelocity(this, LaunchVelocity, Barrel->GetSocketLocation(FName("Projectile")), HitLocation, LaunchSpeed, false, 0.0f, 0.0f,
-		ESuggestProjVelocityTraceOption::DoNotTrace, ResponseParams, ActorsToIgnore, false))
+		ESuggestProjVelocityTraceOption::DoNotTrace, ResponseParams, ActorsToIgnore, false)) // Must supply DoNotTrace or will bug out.
 	{
-		Barrel->Elevate(5.0f);
+		MoveBarrelTowards(LaunchVelocity.GetSafeNormal());
 	}
 }
 
-void UTankAimingComponent::SetBarrel(UTankBarrel * BarrelToSet)
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	Barrel = BarrelToSet;
+	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
+	auto AimRotation = AimDirection.Rotation();
+	auto DeltaRotation = AimRotation - BarrelRotation;
+	Barrel->Elevate(DeltaRotation.Pitch);
 }
+

@@ -14,11 +14,10 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 
 public:	
 	UTankAimingComponent();
-	virtual void BeginPlay() override;
-	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
-	void AimAt(FVector HitLocation, float LaunchSpeed);
 	void SetBarrel(UTankBarrel *BarrelToSet);
+	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 private:
 	UTankBarrel *Barrel = nullptr;
+	void MoveBarrelTowards(FVector AimDirection);
 };
