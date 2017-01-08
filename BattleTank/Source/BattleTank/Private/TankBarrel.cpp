@@ -3,9 +3,9 @@
 #include "BattleTank.h"
 #include "TankBarrel.h"
 
-void UTankBarrel::Elevate(float DegreesPerSecond)
+void UTankBarrel::Elevate(float RelativeSpeed)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Evelate called %f degrees per second"), DegreesPerSecond);
+	UE_LOG(LogTemp, Warning, TEXT("%f: Evelate called %f relative speed"), GetWorld()->GetTimeSeconds(), RelativeSpeed);
 }
 
 
