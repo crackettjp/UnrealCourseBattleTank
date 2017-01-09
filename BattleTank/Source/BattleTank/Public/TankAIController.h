@@ -21,6 +21,4 @@ private:
 
 	ATank* ControlledTank = nullptr;
 	ATank* PlayerTank = nullptr;
-	ATank* GetControlledTank();
-	ATank* GetPlayerTank();
 };
