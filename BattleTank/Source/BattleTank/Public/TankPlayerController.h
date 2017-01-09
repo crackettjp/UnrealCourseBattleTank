@@ -23,13 +23,13 @@ private:
 	ATank* GetControlledTank() const;
 	ATank* GetPlayerTank() const;
 
-	UPROPERTY(EditAnywhere, Category="UI Crosshair")
+	UPROPERTY(EditDefaultsOnly, Category="UI Crosshair")
 	float CrossHairXLocation = 0.5;
 
-	UPROPERTY(EditAnywhere, Category = "UI Crosshair")
+	UPROPERTY(EditDefaultsOnly, Category = "UI Crosshair")
 	float CrossHairYLocation = 1.0f / 3.0f;
 
-	UPROPERTY(EditAnywhere, Category = "UI Crosshair")
+	UPROPERTY(EditDefaultsOnly, Category = "UI Crosshair")
 	float LineTraceRange = 1000000;
 
 	void ATankPlayerController::AimTowardsCrosshair();
