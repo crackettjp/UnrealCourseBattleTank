@@ -42,4 +42,6 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UTankBarrel* Barrel = nullptr;
+	const float ReloadTimeSeconds = 3.0f;
+	double LastFireTime = 0;
 };
