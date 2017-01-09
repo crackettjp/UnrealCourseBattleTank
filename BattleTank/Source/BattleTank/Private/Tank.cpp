@@ -10,6 +10,11 @@ void ATank::SetBarrel(UTankBarrel* BarrelToSet)
 	TankAimingComponent->SetBarrel(BarrelToSet);
 }
 
+void ATank::SetTurret(UTankTurret* TurretToSet)
+{
+	TankAimingComponent->SetTurret(TurretToSet);
+}
+
 // Sets default values
 ATank::ATank()
 {

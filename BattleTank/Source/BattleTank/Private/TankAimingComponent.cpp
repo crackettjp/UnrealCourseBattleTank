@@ -3,6 +3,7 @@
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 
 
 // Sets default values for this component's properties
@@ -14,9 +15,14 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UTankAimingComponent::SetBarrel(UTankBarrel * BarrelToSet)
+void UTankAimingComponent::SetBarrel(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurret(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
@@ -30,6 +36,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		ESuggestProjVelocityTraceOption::DoNotTrace, ResponseParams, ActorsToIgnore, false)) // Must supply DoNotTrace or will bug out.
 	{
 		MoveBarrelTowards(LaunchVelocity.GetSafeNormal());
+		MoveTurretTowards(LaunchVelocity.GetSafeNormal());
 	}
 }
 
@@ -39,5 +46,14 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimRotation = AimDirection.Rotation();
 	auto DeltaRotation = AimRotation - BarrelRotation;
 	Barrel->Elevate(DeltaRotation.Pitch);
+}
+
+void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
+{
+	auto TurretRotation = Turret->GetForwardVector().Rotation();
+	auto AimRotation = AimDirection.Rotation();
+	auto DeltaRotation = AimRotation - TurretRotation;
+	UE_LOG(LogTemp, Warning, TEXT("turret delta rotation %s"), *DeltaRotation.ToString());
+	Turret->Rotate(DeltaRotation.Yaw);
 }
 

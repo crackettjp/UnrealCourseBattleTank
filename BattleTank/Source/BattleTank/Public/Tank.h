@@ -7,6 +7,7 @@
 
 class UTankAimingComponent;
 class UTankBarrel;
+class UTankTurret;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -16,8 +17,11 @@ class BATTLETANK_API ATank : public APawn
 public:
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category="Setup")
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SetBarrel(UTankBarrel *BarrelToSet);
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void SetTurret(UTankTurret *TurretToSet);
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
