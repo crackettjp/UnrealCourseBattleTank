@@ -28,6 +28,7 @@ void UTankAimingComponent::SetTurret(UTankTurret* TurretToSet)
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	if (!Barrel) return;
+	if (!Turret) return;
 
 	FVector LaunchVelocity;
 	FCollisionResponseParams ResponseParams;
@@ -42,6 +43,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
+	if (!Barrel) return;
+
 	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
 	auto AimRotation = AimDirection.Rotation();
 	auto DeltaRotation = AimRotation - BarrelRotation;
@@ -50,10 +53,11 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 {
+	if (!Turret) return;
+
 	auto TurretRotation = Turret->GetForwardVector().Rotation();
 	auto AimRotation = AimDirection.Rotation();
 	auto DeltaRotation = AimRotation - TurretRotation;
-	UE_LOG(LogTemp, Warning, TEXT("turret delta rotation %s"), *DeltaRotation.ToString());
-	Turret->Rotate(DeltaRotation.Yaw);
+	Turret->Rotate(DeltaRotation.GetNormalized().Yaw);
 }
 
