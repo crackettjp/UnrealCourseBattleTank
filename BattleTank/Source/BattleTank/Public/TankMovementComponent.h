@@ -5,15 +5,24 @@
 #include "GameFramework/NavMovementComponent.h"
 #include "TankMovementComponent.generated.h"
 
+class UTankTrack;
+
 /**
- * Navigation component allowing fly-by-wire concoltr of the tank by player or AI.
+ * Navigation component allowing fly-by-wire control of the tank by player or AI.
  */
-UCLASS()
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 {
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
+
 	UFUNCTION(BlueprintCallable, Category="Input")
 	void IntendMoveForward(float Throw);
+
+private:
+	UTankTrack* LeftTrack = nullptr;
+	UTankTrack* RightTrack = nullptr;
 };
