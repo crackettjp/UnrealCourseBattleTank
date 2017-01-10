@@ -64,10 +64,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 			return true;
 		}
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("%s unable to deproject crosshair"), *GetName());
-	}
 
 	return false;
 }
