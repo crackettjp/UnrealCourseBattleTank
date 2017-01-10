@@ -10,6 +10,6 @@ void UTankTrack::SetThrottle(float Throttle)
 
 	auto ForceApplied = GetForwardVector() * Throttle * TrackDrivingForce;
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent()); // Cast gets the first component to which force may be applied (see class viewer).
-	UE_LOG(LogTemp, Warning, TEXT("%f: %s force %s"), GetWorld()->GetTimeSeconds(), *GetName(), *ForceApplied.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("%f: %s force %s"), GetWorld()->GetTimeSeconds(), *GetName(), *ForceApplied.ToString());
 	TankRoot->AddForceAtLocation(ForceApplied, GetComponentLocation());
 }
