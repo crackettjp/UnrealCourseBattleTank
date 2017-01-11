@@ -13,6 +13,10 @@ void ATankPlayerController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Error, TEXT("TankPlayerController %s has no controlled tank"), *GetName());
 	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("TankPlayerController %s controlling %s"), *GetName(), *ControlledTank->GetName());
+	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime)

@@ -8,6 +8,7 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 {
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
+	UE_LOG(LogTemp, Warning, TEXT("TankMovementComponent %s initialising for %s"), *GetFullName(), *GetOwner()->GetName());
 }
 
 
