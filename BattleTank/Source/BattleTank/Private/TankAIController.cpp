@@ -33,6 +33,8 @@ void ATankAIController::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	if (!ControlledTank || !PlayerTank) return;
 
+	UE_LOG(LogTemp, Warning, TEXT("TankAIController %s moving %s to %s"), *GetName(), *ControlledTank->GetName(), *PlayerTank->GetName());
+	MoveToActor(PlayerTank, AcceptanceRadius);
 	ControlledTank->AimAt(PlayerTank->GetTargetLocation(ControlledTank));
 	//ControlledTank->Fire();
 }
