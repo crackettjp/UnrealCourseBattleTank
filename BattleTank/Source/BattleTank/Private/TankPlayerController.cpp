@@ -8,7 +8,7 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ControlledTank = GetControlledTank();
+	ControlledTank = Cast<ATank>(GetPawn());
 	if (!ControlledTank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("TankPlayerController %s has no controlled tank"), *GetName());
@@ -23,11 +23,6 @@ void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	AimTowardsCrosshair();
-}
-
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
 }
 
 void ATankPlayerController::AimTowardsCrosshair()

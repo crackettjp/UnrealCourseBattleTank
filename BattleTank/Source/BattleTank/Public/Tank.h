@@ -36,7 +36,6 @@ protected:
 
 private:
 	ATank();
-	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")

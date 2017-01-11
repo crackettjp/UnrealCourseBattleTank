@@ -21,11 +21,6 @@ void ATankAIController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Error, TEXT("TankAIController %s unable to find player tank"), *GetName());
 	}
-
-	if (ControlledTank && PlayerTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("TankAIController %s controlling %s attacking %s"), *GetName(), *ControlledTank->GetName(), *PlayerTank->GetName())
-	}
 }
 
 void ATankAIController::Tick(float DeltaSeconds)
@@ -35,6 +30,8 @@ void ATankAIController::Tick(float DeltaSeconds)
 
 	MoveToActor(PlayerTank, AcceptanceRadius);
 	ControlledTank->AimAt(PlayerTank->GetTargetLocation(ControlledTank));
+
+	// FIXME Temporarilly disable as it is a pain when you are trying to debug movement.
 	//ControlledTank->Fire();
 }
 

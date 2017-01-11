@@ -6,7 +6,7 @@
 #include "TankTrack.generated.h"
 
 /**
- * Controllable tank track
+ * Throttlable tank track.  Applies force in the forward direction of the owning tank.
  */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankTrack : public UStaticMeshComponent

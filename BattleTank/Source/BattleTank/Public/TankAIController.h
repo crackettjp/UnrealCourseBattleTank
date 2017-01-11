@@ -8,7 +8,7 @@
 class ATank;
 
 /**
- * 
+ * Controls the movement and firing of the AI tanks.
  */
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController

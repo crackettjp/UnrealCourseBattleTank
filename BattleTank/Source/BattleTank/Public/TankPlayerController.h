@@ -8,7 +8,7 @@
 class ATank;
 
 /**
- * 
+ * Link the movement and firing of the player tank to the 
  */
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
@@ -19,9 +19,10 @@ private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 
+	void ATankPlayerController::AimTowardsCrosshair();
+	bool GetSightRayHitLocation(FVector& HitLocation) const;
+
 	ATank *ControlledTank;
-	ATank* GetControlledTank() const;
-	ATank* GetPlayerTank() const;
 
 	UPROPERTY(EditDefaultsOnly, Category="UI Crosshair")
 	float CrossHairXLocation = 0.5;
@@ -31,7 +32,4 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI Crosshair")
 	float LineTraceRange = 1000000;
-
-	void ATankPlayerController::AimTowardsCrosshair();
-	bool GetSightRayHitLocation(FVector& HitLocation) const;
 };
