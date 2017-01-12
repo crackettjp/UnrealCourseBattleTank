@@ -25,8 +25,6 @@ void ATankAIController::Tick(float DeltaSeconds)
 			TankAimingComponent->AimAt(PlayerTank->GetTargetLocation(GetPawn()));
 		}
 	}
-
-	// FIXME Temporarilly disable as it is a pain when you are trying to debug movement.
-	//ControlledTank->Fire();
+	TankAimingComponent->Fire();
 }
 
