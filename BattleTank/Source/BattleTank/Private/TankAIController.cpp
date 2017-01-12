@@ -3,6 +3,7 @@
 #include "BattleTank.h"
 #include "TankAIController.h"
 #include "Tank.h"
+// Depends on TankMovementComponent, MoveToActor->pathfinding->TankMovementComponent->RequestDirectMove.
 
 void ATankAIController::BeginPlay()
 {
