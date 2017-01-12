@@ -11,21 +11,10 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	ControlledTank = GetControlledTank();  // FIXME check if saving this is really worth it
-	if (!ControlledTank)
-	{
-		UE_LOG(LogTemp, Error, TEXT("TankPlayerController %s has no controlled tank"), *GetName());
-		return;
-	}
 
 	UTankAimingComponent* AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-	if (AimingComponent)
-	{
-		FoundAimingComponent(AimingComponent);
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("TankPlayerController %s unable to find aiming component for %s"), *ControlledTank->GetName());
-	}
+	if (!ensure(AimingComponent)) return;
+	FoundAimingComponent(AimingComponent);
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -36,7 +25,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!ControlledTank) return;
+	if (!ensure(ControlledTank)) return;
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation))
@@ -47,7 +36,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
-	if (!ControlledTank) return false;
+	if (!ensure(ControlledTank)) return false;
 
 	// Find the crosshair location on the screen in pixels.
 	int32 ViewportSizeX, ViewportSizeY;
