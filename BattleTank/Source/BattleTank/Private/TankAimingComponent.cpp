@@ -41,7 +41,7 @@ void UTankAimingComponent::Fire()
 
 	if ((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeSeconds)
 	{
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 		Projectile->Launch(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 	}
@@ -51,9 +51,9 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	if (!ensure(Barrel)) return;
 
-	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
-	auto AimRotation = AimDirection.Rotation();
-	auto DeltaRotation = AimRotation - BarrelRotation;
+	FRotator BarrelRotation = Barrel->GetForwardVector().Rotation();
+	FRotator AimRotation = AimDirection.Rotation();
+	FRotator DeltaRotation = AimRotation - BarrelRotation;
 	Barrel->Elevate(DeltaRotation.Pitch);
 }
 
@@ -61,8 +61,8 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 {
 	if (!ensure(Turret)) return;
 
-	auto TurretRotation = Turret->GetForwardVector().Rotation();
-	auto AimRotation = AimDirection.Rotation();
-	auto DeltaRotation = AimRotation - TurretRotation;
+	FRotator TurretRotation = Turret->GetForwardVector().Rotation();
+	FRotator AimRotation = AimDirection.Rotation();
+	FRotator DeltaRotation = AimRotation - TurretRotation;
 	Turret->Rotate(DeltaRotation.GetNormalized().Yaw);
 }

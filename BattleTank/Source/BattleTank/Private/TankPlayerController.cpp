@@ -38,7 +38,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	// Find the crosshair location on the screen in pixels.
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
-	auto CrosshairScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
+	FVector2D CrosshairScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
 
 	// SEE GetHitResultAtScreenPosition()!
 
