@@ -25,6 +25,6 @@ void ATankAIController::Tick(float DeltaSeconds)
 			TankAimingComponent->AimAt(PlayerTank->GetTargetLocation(GetPawn()));
 		}
 	}
-	TankAimingComponent->Fire();
+	// FIXME TankAimingComponent->Fire();
 }
 
