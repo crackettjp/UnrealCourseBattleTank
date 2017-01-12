@@ -2,7 +2,6 @@
 
 #include "BattleTank.h"
 #include "TankPlayerController.h"
-#include "Tank.h"
 #include "TankAimingComponent.h"
 
 
@@ -10,14 +9,10 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ControlledTank = GetControlledTank();  // FIXME check if saving this is really worth it
-	if (ensure(ControlledTank))
+	TankAimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(TankAimingComponent))
 	{
-		TankAimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-		if (ensure(TankAimingComponent))
-		{
-			FoundAimingComponent(TankAimingComponent);
-		}
+		FoundAimingComponent(TankAimingComponent);
 	}
 }
 
@@ -40,8 +35,6 @@ void ATankPlayerController::AimTowardsCrosshair()
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
-	if (!ensure(ControlledTank)) return false;
-
 	// Find the crosshair location on the screen in pixels.
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
@@ -58,7 +51,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 		FHitResult HitResult;
 		FVector TraceEnd = CameraWorldLocation + WorldDirection * LineTraceRange;
 		// FIXME hits the SkySphere
-		FCollisionQueryParams TraceParams(FName(TEXT("")), false, ControlledTank);
+		FCollisionQueryParams TraceParams(FName(TEXT("")), false, GetPawn());
 		if (GetWorld()->LineTraceSingleByChannel(HitResult, CameraWorldLocation, TraceEnd, ECollisionChannel::ECC_Visibility, TraceParams))
 		{
 			HitLocation = HitResult.ImpactPoint;
@@ -67,9 +60,4 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	}
 
 	return false;
-}
-
-ATank * ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
 }
