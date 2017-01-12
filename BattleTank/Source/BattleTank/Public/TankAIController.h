@@ -6,6 +6,8 @@
 #include "TankAIController.generated.h"
 
 class ATank;
+class UTankAimingComponent;
+
 
 /**
  * Controls the movement and firing of the AI tanks.
@@ -20,6 +22,7 @@ private:
 	virtual void Tick(float DeltaSeconds) override;
 
 	ATank* ControlledTank = nullptr;
+	UTankAimingComponent* TankAimingComponent = nullptr;
 	ATank* PlayerTank = nullptr;
 	float AcceptanceRadius = 3000;
 };

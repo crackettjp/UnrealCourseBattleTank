@@ -3,6 +3,7 @@
 #include "BattleTank.h"
 #include "TankAIController.h"
 #include "Tank.h"
+#include "TankAimingComponent.h"
 // Depends on TankMovementComponent, MoveToActor->pathfinding->TankMovementComponent->RequestDirectMove.
 
 void ATankAIController::BeginPlay()
@@ -10,16 +11,21 @@ void ATankAIController::BeginPlay()
 	Super::BeginPlay();
 
 	ControlledTank = Cast<ATank>(GetPawn());
+	if (ensure(ControlledTank))
+	{
+		TankAimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	}
+
 	PlayerTank = Cast<ATank>(UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetPawn());
 }
 
 void ATankAIController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	if (!ensure(ControlledTank || !ensure(PlayerTank))) return;
+	if (!ensure(ControlledTank) || !ensure(TankAimingComponent) || !ensure(PlayerTank)) return;
 
 	MoveToActor(PlayerTank, AcceptanceRadius);
-	ControlledTank->AimAt(PlayerTank->GetTargetLocation(ControlledTank));
+	TankAimingComponent->AimAt(PlayerTank->GetTargetLocation(ControlledTank));
 
 	// FIXME Temporarilly disable as it is a pain when you are trying to debug movement.
 	//ControlledTank->Fire();

@@ -8,6 +8,7 @@
 class UTankBarrel;
 class UTankTurret;
 
+
 UENUM()
 enum class EFiringState : uint8
 {
@@ -27,9 +28,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void Initialise(UTankBarrel *BarrelToSet, UTankTurret *TurretToSet);
 
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
 protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 100000;
+
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Aiming;
 

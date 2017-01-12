@@ -11,10 +11,14 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	ControlledTank = GetControlledTank();  // FIXME check if saving this is really worth it
-
-	UTankAimingComponent* AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-	if (!ensure(AimingComponent)) return;
-	FoundAimingComponent(AimingComponent);
+	if (ensure(ControlledTank))
+	{
+		TankAimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+		if (ensure(TankAimingComponent))
+		{
+			FoundAimingComponent(TankAimingComponent);
+		}
+	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -25,12 +29,12 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!ensure(ControlledTank)) return;
+	if (!ensure(TankAimingComponent)) return;
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		ControlledTank->AimAt(HitLocation);
+		TankAimingComponent->AimAt(HitLocation);
 	}
 }
 

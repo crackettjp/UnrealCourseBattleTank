@@ -8,6 +8,7 @@
 class ATank;
 class UTankAimingComponent;
 
+
 /**
  * Link the movement and firing of the player tank
  */
@@ -30,7 +31,8 @@ private:
 	void ATankPlayerController::AimTowardsCrosshair();
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
 
-	ATank *ControlledTank;
+	ATank *ControlledTank = nullptr;
+	UTankAimingComponent* TankAimingComponent = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category="UI Crosshair")
 	float CrossHairXLocation = 0.5;
