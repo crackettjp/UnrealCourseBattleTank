@@ -16,19 +16,21 @@ enum class EFiringState : uint8
 	Locked
 };
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	UTankAimingComponent();
-	void SetBarrel(UTankBarrel *BarrelToSet);
-	void SetTurret(UTankTurret *TurretToSet);
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void Initialise(UTankBarrel *BarrelToSet, UTankTurret *TurretToSet);
+
 	void AimAt(FVector HitLocation, float LaunchSpeed);
 
 protected:
-	UPROPERTY(BlueprintReadOnly, Category="State")
+	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 
 private:

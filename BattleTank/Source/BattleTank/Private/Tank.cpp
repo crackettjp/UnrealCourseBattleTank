@@ -8,17 +8,6 @@
 #include "TankMovementComponent.h"
 
 
-void ATank::SetBarrel(UTankBarrel* BarrelToSet)
-{
-	Barrel = BarrelToSet;
-	TankAimingComponent->SetBarrel(Barrel);
-}
-
-void ATank::SetTurret(UTankTurret* TurretToSet)
-{
-	TankAimingComponent->SetTurret(TurretToSet);
-}
-
 void ATank::Fire()
 {
 	if (!Barrel) return;
@@ -35,13 +24,6 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
-	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-}
-
-void ATank::SetupPlayerInputComponent(class UInputComponent* InputComponent)
-{
-	Super::SetupPlayerInputComponent(InputComponent);
 }
 
 void ATank::AimAt(FVector HitLocation)
