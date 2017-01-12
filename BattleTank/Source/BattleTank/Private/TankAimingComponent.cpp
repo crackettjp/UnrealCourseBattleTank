@@ -17,7 +17,6 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-	UE_LOG(LogTemp, Warning, TEXT("aiming component initialising"));
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
 }

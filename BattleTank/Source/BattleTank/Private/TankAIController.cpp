@@ -8,8 +8,6 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// He did this every time in Tick().
-
 	ControlledTank = Cast<ATank>(GetPawn());
 	if (!ControlledTank)
 	{
