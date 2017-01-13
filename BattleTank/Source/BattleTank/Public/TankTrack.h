@@ -6,7 +6,7 @@
 #include "TankTrack.generated.h"
 
 /**
- * Throttlable tank track.  Applies force in the forward direction of the owning tank.
+ * Tank track that may apply a force to its owning body through a throttle.  Applies force in the forward direction of the owning tank.
  */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankTrack : public UStaticMeshComponent
@@ -14,11 +14,14 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 	GENERATED_BODY()
 
 public:
-	// Sets the throttle -1 to +1.
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
 
 	// Track max driving force in Newtons.
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	float TrackDrivingForce = 400000; // 40 tonne tank, 1G.
+
+private:
+	UTankTrack();
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
 };
