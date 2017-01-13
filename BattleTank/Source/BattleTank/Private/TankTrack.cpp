@@ -5,7 +5,13 @@
 
 UTankTrack::UTankTrack()
 {
+	bWantsBeginPlay = true;
+}
+
+void UTankTrack::BeginPlay()
+{
 	PrimaryComponentTick.bCanEverTick = true;
+	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
 void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
@@ -17,6 +23,11 @@ void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	FVector CorrectionForce = (TankRoot->GetMass() * CorrectAcceleration) / 2;
 	TankRoot->AddForce(CorrectionForce);
+}
+
+void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("OnHit: %s %s %s %s"), *HitComponent->GetName(), *OtherActor->GetName(), *OtherComp->GetName(), *NormalImpulse.ToString());
 }
 
 void UTankTrack::SetThrottle(float Throttle)
