@@ -6,22 +6,24 @@
 #include "TankBarrel.generated.h"
 
 /**
- * Elevatable tank barrel component.
+ * 
  */
-UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+UCLASS(meta = (BlueprintSpawnableComponent)) //, hidecategories = ("Collision"))
 class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 {
 	GENERATED_BODY()
 	
 public:
+	// -1 is max downward speed, and +1 is max up movement
 	void Elevate(float RelativeSpeed);
 
-	UPROPERTY(EditDefaultsOnly)
-	float MaxDegreesPerSecond = 10.0f;
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float MaxDegreesPerSecond = 10;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float MaxElevationDegrees = 40;
 
-	UPROPERTY(EditDefaultsOnly)
-	float MinElevationDegrees = 0.0f;
-
-	UPROPERTY(EditDefaultsOnly)
-	float MaxElevationDegrees = 40.0f;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float MinElevationDegrees = 0;
 };
