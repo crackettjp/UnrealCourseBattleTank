@@ -14,25 +14,35 @@ void UTankTrack::BeginPlay()
 	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
-void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+void UTankTrack::CounteractSidewaysForce()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
 	float SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
-	FVector CorrectAcceleration = -SlippageSpeed / DeltaTime * GetRightVector();
+	FVector CorrectAcceleration = -SlippageSpeed / GetWorld()->GetDeltaSeconds() * GetRightVector();
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	FVector CorrectionForce = (TankRoot->GetMass() * CorrectAcceleration) / 2;
 	TankRoot->AddForce(CorrectionForce);
 }
 
+void UTankTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+}
+
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("OnHit: %s %s %s %s"), *HitComponent->GetName(), *OtherActor->GetName(), *OtherComp->GetName(), *NormalImpulse.ToString());
+	DriveTrack();
+	CounteractSidewaysForce();
+	CurrentThrottle = 0.0;
 }
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	FVector ForceApplied = GetForwardVector() * Throttle * TrackDrivingForce;
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1.0, 1.0);
+}
+
+void UTankTrack::DriveTrack()
+{
+	FVector ForceApplied = GetForwardVector() * CurrentThrottle * TrackDrivingForce;
 	UPrimitiveComponent* TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent()); // Cast gets the first component to which force may be applied (see class viewer).
 	TankRoot->AddForceAtLocation(ForceApplied, GetComponentLocation());
 }

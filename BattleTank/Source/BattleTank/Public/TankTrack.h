@@ -17,6 +17,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
 
+	void DriveTrack();
+
 	// Track max driving force in Newtons.
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	float TrackDrivingForce = 400000; // 40 tonne tank, 1G.
@@ -24,8 +26,12 @@ public:
 private:
 	UTankTrack();
 	virtual void BeginPlay() override;
+
+	void CounteractSidewaysForce();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
+	float CurrentThrottle = 0.0f;
 };
