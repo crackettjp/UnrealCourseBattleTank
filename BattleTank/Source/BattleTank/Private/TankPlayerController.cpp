@@ -30,20 +30,23 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation))
 	{
+		UE_LOG(LogTemp, Warning, TEXT("aim solution"));
 		TankAimingComponent->AimAt(HitLocation);
 	}
+	else
+		UE_LOG(LogTemp, Warning, TEXT("NO aim solution"));
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
-	// Find the crosshair location on the screen in pixels.
+	// Find the cross hair location on the screen in pixels.
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	FVector2D CrosshairScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
 
 	// SEE GetHitResultAtScreenPosition()!
 
-	// Find the unit vector direction of the crosshair
+	// Find the unit vector direction of the cross hair
 	FVector CameraWorldLocation;
 	FVector WorldDirection;
 	if (DeprojectScreenPositionToWorld(CrosshairScreenLocation.X, CrosshairScreenLocation.Y, CameraWorldLocation, WorldDirection))
