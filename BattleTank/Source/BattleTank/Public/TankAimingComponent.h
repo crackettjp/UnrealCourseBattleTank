@@ -35,15 +35,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	EFiringState GetFiringState() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int32 GetAmmoLeft() const;
+
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Reloading;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "State")
-	int32 AmmoCount = 99;
-
 private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
@@ -59,16 +57,19 @@ private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 4000;
-	
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 4000;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;
 
-	double LastFireTime = 0;
+	UPROPERTY(EditDefaultsOnly, Category = "State")
+	int32 AmmoLeft = 10;
 
+	EFiringState FiringState = EFiringState::Reloading;
+	double LastFireTime = 0;
 	FVector AimDirection;
 };
