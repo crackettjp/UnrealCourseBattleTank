@@ -9,6 +9,7 @@
 UENUM()
 enum class EFiringState : uint8
 {
+	OutOfAmmo,
 	Reloading,
 	Aiming,
 	Locked
@@ -39,6 +40,9 @@ public:
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "State")
+	int32 AmmoCount = 99;
 
 private:
 	// Sets default values for this component's properties
