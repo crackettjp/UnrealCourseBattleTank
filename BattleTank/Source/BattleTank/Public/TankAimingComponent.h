@@ -41,7 +41,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	int32 GetAmmoLeft() const;
 
-protected:
 private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
