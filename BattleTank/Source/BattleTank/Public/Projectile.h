@@ -9,20 +9,20 @@ UCLASS()
 class BATTLETANK_API AProjectile : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	AProjectile();
 	virtual void BeginPlay() override;
-	virtual void Tick( float DeltaSeconds ) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	void LaunchProjectile(float Speed);
 
 private:
 	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* CollisionMesh = nullptr;
+		UStaticMeshComponent* CollisionMesh = nullptr;
 
 	UPROPERTY(VisibleAnywhere)
-	UParticleSystemComponent* LaunchBlast = nullptr;
+		UParticleSystemComponent* LaunchBlast = nullptr;
 
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 };
