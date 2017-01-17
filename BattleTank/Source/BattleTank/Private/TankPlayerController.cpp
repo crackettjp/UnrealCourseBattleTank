@@ -64,7 +64,10 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 
 void ATankPlayerController::OnTankDeath()
 {
-	StartSpectatingOnly();
+	if (GetPawn())
+	{
+		StartSpectatingOnly();
+	}
 }
 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const
