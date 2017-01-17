@@ -49,13 +49,14 @@ void AProjectile::LaunchProjectile(float Speed)
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("hit!"));
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate(true);
 	ExplostionForce->FireImpulse();
 
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent(false);
+
+	UGameplayStatics::ApplyRadialDamage(this, BaseDamage, CollisionMesh->GetComponentLocation(), ExplostionForce->Radius, UDamageType::StaticClass(), TArray<AActor*>());
 
 	FTimerHandle TimerHandle = FTimerHandle();
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AProjectile::OnTimerExpire, DestroyDelay, false);
