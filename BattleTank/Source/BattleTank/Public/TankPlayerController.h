@@ -21,15 +21,18 @@ protected:
 
 private:
 	virtual void BeginPlay() override;
-
 	virtual void Tick( float DeltaTime ) override;
+	virtual void SetPawn(APawn* InPawn) override;
 
 	// Start the tank moving the barrel so that a shot would hit where
-	// the crosshair intersects the world
+	// the cross hair intersects the world
 	void AimTowardsCrosshair();
 
 	// Return an OUT parameter, true if hit landscape
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
+
+	UFUNCTION()
+	void OnTankDeath();
 
 	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5;

@@ -19,12 +19,12 @@ float ATank::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AC
 	UE_LOG(LogTemp, Warning, TEXT("%s: damage taken %i, current health %i"), *GetName(), DamageToApply, CurrentHealth);
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s: dead"), *GetName());
+		OnTankDeath.Broadcast();
 	}
 	return static_cast<float>(DamageToApply);
 }
 
 float ATank::GetHealthPercent()
 {
-	return static_cast<float>(CurrentHealth) / static_cast<float>(StartingHealth) * 100.0f;
+	return static_cast<float>(CurrentHealth) / static_cast<float>(StartingHealth);
 }
